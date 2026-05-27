@@ -1,64 +1,20 @@
-variable "instance_name" {
-  description = "Nombre de la instancia EC2"
-  type        = string
-}
-
-variable "instance_type" {
-  description = "Tipo de instancia"
+variable "tipo_instancia" {
+  description = "Tamaño de la instancia EC2. Define la CPU y memoria (ej: t2.micro)."
   type        = string
   default     = "t2.micro"
-  validation {
-    condition     = contains(["t2.micro", "t2.small", "t3.micro", "t3.small"], var.instance_type)
-    error_message = "Tipo de instancia no permitido en AWS Academy."
-  }
-}
-
-variable "ami_id" {
-  description = "ID de la AMI"
-  type        = string
-  default     = "ami-0c101f26f147fa7fd"
-}
-
-variable "subnet_id" {
-  description = "ID de la subred"
-  type        = string
-}
-
-variable "environment" {
-  description = "Ambiente: dev, staging o prod"
-  type        = string
-  default     = "dev"
-  validation {
-    condition     = contains(["dev", "staging", "prod"], var.environment)
-    error_message = "El ambiente debe ser dev, staging o prod."
-  }
-}
-
-variable "tags_extra" {
-  description = "Etiquetas adicionales"
-  type        = map(string)
-  default     = {}
-}
-
-variable "user_data" {
-  description = "Script de inicializacion de la instancia"
-  type        = string
-  default     = null
 }
 
 variable "vpc_id" {
-  description = "ID de la VPC donde se creara el Security Group"
+  description = "ID de la VPC donde se desplegará la instancia y el Security Group."
   type        = string
 }
 
-variable "allowed_ports" {
-  description = "Lista de puertos TCP de entrada permitidos"
-  type        = list(number)
-  default     = [80, 443, 22]
+variable "subnet_id" {
+  description = "ID de la subred específica donde residirá el servidor."
+  type        = string
 }
 
-variable "allowed_cidr" {
-  description = "CIDR desde el que se permite el trafico"
-  type        = string
-  default     = "0.0.0.0/0"
+variable "tags" {
+  description = "Mapa de etiquetas para aplicar a todos los recursos del módulo."
+  type        = map(string)
 }
