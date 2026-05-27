@@ -1,27 +1,14 @@
-variable "vpc_name" {
-  type = string
+variable "vpc_cidr" {
+  description = "Rango de direcciones IP para la VPC en formato CIDR (ej. 10.0.0.0/16)."
+  type        = string
 }
 
-variable "cidr_block" {
-  type    = string
-  default = "10.0.0.0/16"
+variable "nombre_entorno" {
+  description = "Etiqueta para identificar el entorno (ej: dev, staging, prod)."
+  type        = string
 }
 
-variable "environment" {
-  type    = string
-  default = "dev"
-}
-
-variable "instance_name" {
-  type = string
-}
-
-variable "instance_type" {
-  type    = string
-  default = "t2.micro"
-}
-
-variable "allowed_ports" {
-  type    = list(number)
-  default = [80, 22]
+variable "public_subnets" {
+  description = "Lista de rangos CIDR para las subredes públicas."
+  type        = list(string)
 }
