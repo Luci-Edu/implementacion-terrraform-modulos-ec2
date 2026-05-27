@@ -1,0 +1,32 @@
+name: "Terraform CI"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform-lint:
+    name: "Validación y Formato"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Verificar Formato (IL3.1)
+        run: terraform fmt -check -recursive
+        # Esto falla si el código no está bien indentado según las mejores prácticas.
+
+      - name: Terraform Init
+        run: terraform init -backend=false
+        # Prepara los módulos para la validación.
+
+      - name: Terraform Validate (IL3.1)
+        run: terraform validate
+        # Revisa que la sintaxis y lógica de los módulos sea correcta.
